@@ -1,0 +1,64 @@
+2.1. Các khái niệm cơ bản
+1, tập kí tự dùng trong ngôn ngữ C
+include, void, main,...
+printf ("..."), getch(),...
+2, từ khóa
+case : lệnh rẽ nhánh
+3, định danh - xác định, không trùng lặp với nhau
+tên biến bắt đầu bằng chữ cái, dấu gạch dưới,
+không được bắt đầu bằng chữ số, không được trùng với từ khóa sẵn có.
+2.2. Một số quy tắc khi viết chương trình
+2.3. Cấu trúc một chương trình
+1, cấu trúc tổng quát:
+2, câu lệnh:
+3, hàm
+
+
+Chương 3: 
+3.1 Các kiểu dữ liệu cơ bản:
+kiểu dữ liệu cơ bản
+* int: số nguyên
+trong phạm vi : -32768 tới 32767
+* float: kiểu số thực với độ chính xác đơn:
+chiếm 32 bits (4 bytes) bộ nhớ
+3.3 Hằng
+3.4 Biến
+đại lượng có thể thay đổi 
+
+Chương 4:
+Hàm scanf()
+gets()
+
+Chương 5:
+return bieu_thuc; -> đùng để trở về từ một hàm
+goto label; -> chuyển điều khiển đến một câu lệnh bất kì khác bên trong cùng 1 hàm trong 
+1 chương trình C; giảm độ tin cậy của ct, k khuyến khích dùng
+break; -> nhảy ra khỏi vòng lặp; thoát ra khỏi lệnh case trong câu lệnh switch; 
+continue; -> dùng để bắt đầu thực hiện lần lặp kế tiếp của vòng lặp; khi gặp thì các câu lệnh còn lại được bỏ qua;
+
+
+chương 6:
+cấu trúc hàm: 
+nguyên mẫu hàm long int ... (int n)
+phân loại biến :
+biến cụ bộ : được khai báo bên trong hàm
+được tạo tại điểm vào của một khối và bị hủy tại điểm ra khỏi khối đó
+tham số hình thức ( có thể coi là một biến cục bộ)
+biến toàn cục: lưu các giá trị tồn tại suốt thời gian thực thi của chương trình
+
+
+truyền tham chiếu: 
+
+
+chương 8:
+union : cho phép dự trữ các kiểu dữ liệu khác nhau trong cùng một vùng nhớ
+định nghĩa tương tự như struct, cung cấp một cách hiệu quả cho việc sử dụng cùng 1 bộ nhớ
+syntax :  tên biến union.tên trường
+
+struct : từng thuộc tính lưu trữ trong từng bộ nhỡ
+union: dùng chung 1 vùng nhớ
+
+
+
+
+

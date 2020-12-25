@@ -1,0 +1,1076 @@
+
+Bài 1-k55: Xây dựng cấu trúc gồm các thông tin sau của N cán bộ trong một cơ quan: Họ tên, tuổi, giới tính, hệ số lương, thưởng, bảo hiểm. Viết chương trình thực hiện các chức năng sau:
+Câu 1: ( 2 điểm)
+Nhập thông tin cho từng cán bộ trong cơ quan.
+Câu 2: (2 điểm)
+Tính thu nhập của từng cán bộ trong cơ quan và thu nhập trung bình của các cán bộ. Biết rằng: Thu nhập = hệ số lương *1.150.000 + thưởng – bảo hiểm
+Câu 3: (2 điểm)
+Đếm xem có bao nhiêu cán bộ là nam giới và tuổi >=60.
+Câu 4: (2 điểm)
+Tìm và in ra thông tin của cán bộ có thu nhập cao nhất.
+Câu 5: (2 điểm)
+Sắp xếp và in thông tin dưới dạng bảng sau của các cán bộ theo thứ tự tăng dần của thu nhập. STT Họ và tên Tuổi Thu nhập/* Bai 1 : cslt K55*/
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<string.h>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+struct CB{
+	char Ht[30];
+	int tuoi,gt;
+	float heSoLuong,thuong,Bh,tn,tntb;
+};
+void nhap(CB &cb){
+	cout<<"\nNhap vao ho ten can bo:";fflush(stdin);
+	gets(cb.Ht);
+	cout<<"\nNhap va gioi tinh  0 là nu 1 la nam :";
+	cin>>cb.gt;
+	cout<<"\nNhap vao tuoi :";cin>>cb.tuoi;
+	cout<<"\nNhap vao he so luong :";cin>>cb.heSoLuong;
+	cout<<"\nNhap vao Thuong :";cin>>cb.thuong;
+	cout<<"\nNhap vao tien bao hiem :";cin>>cb.Bh;
+	cb.tn=cb.heSoLuong*1150+cb.thuong-cb.Bh;
+	
+}
+void nhap(CB c[],int k){
+	for(int i=0;i<k;i++){
+			cout<<"\nNhap vao thuong tin Cb thu "<<(i+1)<<"la:";
+			nhap(c[i]);
+			c[i].tntb +=c[i].tntb/k;
+		}
+}
+float soluong(CB c[],int k)
+	{
+		int sl=0;
+	    for(int i=0;i<k;i++){
+		   if(c[i].gt==1&&c[i].tuoi>=60)
+			   {
+			      sl=sl+1;   	      
+			   }			
+		}
+	return sl;
+	}
+CB max(CB c[],int k){
+   CB temp=c[0];
+   for(int i=0;i<k;i++){
+      if(c[i].tn<temp.tn)
+      temp=c[i];
+      return temp;
+   }
+};	
+void xuat(CB cb){
+   cout<<"\nTen Can Bo la:"<<cb.Ht;
+   if(cb.gt==1){
+     cout<<"\nGioi tanh ban la: Nam ";
+   }
+   else{
+   	 cout<<"\nGioi tinh ban la: Nu ";
+   }
+   cout<<"\nTuoi :"<<cb.tuoi;
+   cout<<"\nVoi he so luong :"<<cb.heSoLuong;
+   cout<<"\nTien thuong :"<<cb.thuong;
+   cout<<"\nBao hiem :"<<cb.Bh;
+   cout<<"\nThu nhap :"<<cb.tn;
+   cout<<"\nThu Nhap Trung Binh Cua Cac Can Bo la:"<<cb.tntb;
+};
+void swap(CB&cb1,CB&cb2){
+   CB temp;
+   temp=cb1;
+   cb1=cb2;
+   cb2=temp;
+
+}
+void sapxep(CB c[],int k){
+   for(int i=0;i<k;i++){
+      for(int j=i+1;j<k;j++){
+	     if(c[i].tn>c[j].tn)
+	     swap(c[i],c[j]);
+	  }
+   }
+}
+void xuat(CB c[],int k){
+   cout<<"\n|     STT      |      Ten Ho       |      Tuoi     |   Thu nhap    |";
+	    cout<<"\n____________________________________________________________";
+	    for(int i=0;i<k;i++)
+	    	{
+			  cout<<"\n|"<<setw(7)<<(i+1)<<setw(8)<<"|"<<setw(8)<<c[i].Ht<<setw(8)<<"|"<<setw(8)<<c[i].tuoi<<setw(8)<<"|"<<setw(8)<<c[i].tn<<setw(8)<<"|";
+			  cout<<"\n____________________________________________________________";
+			}
+
+};
+int main(){
+   CB c[100];
+   int n;
+   cout<<"Nhap vao so can bo :";
+   cin>>n;
+   cout<<"  NHAP THONG TIN CUA TUNG CAN BO  ";
+   nhap(c,n);
+   cout<<"\nSo luong can bo >=60 tuoi la : "<<soluong(c,n); 
+   cout<<"\nThong Tin Cua Can Bo Co Thu Nhap Cao Nhat :";
+   xuat(max(c,n));
+   cout<<"\n        BANG THONG TIN        ";
+   sapxep(c,n);
+   xuat(c,n);
+
+}
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Bài 2-k55:Cho một tập hoá đơn tiền điện trong một tháng cho N khách hàng. Mỗi hoá đơn bao gồm các thông tin sau: Mã khách hàng, tên khách hàng, địa chỉ khách hàng, chỉ số đo đồng hồ tháng trước, chỉ số đo đồng hồ tháng sau, chỉ số tiêu thụ, số tiền.Viết chương trình thực hiện các chức năng sau:
+Câu 1: (2 điểm)
+Nhập thông tin cho từng khách hàng.
+Câu 2: (2 điểm)
+Tính chỉ số tiêu thụ điện và số tiền phải trả của từng khách hàng trong tháng. Biết rằng: Chỉ số tiêu thụ trong tháng = Chỉ số đo tháng trước – Chỉ số đo tháng sau Số tiền phải trả trong tháng của từng khách hàng = Chỉ số tiêu thụ *3000
+Câu 3: (2 điểm)
+Tính tổng số tiền mà nhà sản xuất thu được từ N khách hàng trên.
+Câu 4: (2 điểm)
+Tìm và in thông tin của những khách hàng có chỉ số tiêu thụ cao nhất.
+Câu 5: (2 điểm)
+Sắp xếp và in thông tin của từng khách hàng dưới dạng bảng sau theo thứ tự giảm dần của số tiền phải trả.
+STT Họ tên khách hàng Chỉ số tiêu thụ Số tiền phải trả
+
+/*Bài 2 CSLT K55 */
+#include<stdio.h>
+#include<conio.h>
+#include<iomanip>
+#include<iostream>
+using namespace std;
+
+struct TD{
+	char MaKH[30],Ten[30],DC[30];
+	float csdtruoc,csdSau,sotieuthu,sotien,tongtien;
+};
+void nhap(TD&td){
+   cout<<"\nNhap vao Ma khach hang :";fflush(stdin);gets(td.MaKH);
+   cout<<"\nNhap vao Ten Khach hang :";gets(td.Ten);
+   cout<<"\nNhap vao Dia chi :";gets(td.DC);
+   cout<<"\nNhap vao so dien thang chuoc :";cin>>td.csdtruoc;
+   cout<<"\nNhap vao so dien thang sau :";cin>>td.csdSau;
+   td.sotieuthu=td.csdSau-td.csdtruoc;
+   td.sotien=td.sotieuthu*3000;
+};
+void nhap(TD s[],int k){
+	for(int i=0;i<k;i++){
+		cout<<"\nNhap vao sinh vien thu "<<(i+1)<<" la:";
+		nhap(s[i]);
+	}
+};
+float tong(TD s[],int k){
+	for(int i=0;i<k;i++){  	
+	   return s[i].tongtien +=s[i].sotien;
+	}
+};
+void xuat(TD &td){
+  cout<<"\nMa khach hang :"<<td.MaKH;
+  cout<<"\nTen Khach Hang :"<<td.Ten;
+  cout<<"\nDia chi :"<<td.DC;
+  cout<<"\nSo dien thang chuoc :"<<td.csdtruoc;
+  cout<<"\nSo dien thang sau :"<<td.csdSau;
+  cout<<"\nSo dien tieu thu:"<<td.sotieuthu;
+  cout<<"\nSo tien tieu thu : "<<td.sotien;
+
+};
+void swap(TD&td1,TD&td2){
+   TD temp;
+   temp=td1;
+   td1=td2;
+   td2=temp;
+
+}
+void sapxep(TD s[],int k){
+	for(int i=0;i<k;i++){
+	   for(int j=i+1;j<k;j++){
+	      if(s[i].sotien<s[j].sotien)
+	        swap(s[i],s[j]);
+	   }
+	}
+   
+}
+void xuat(TD s[],int k){
+      cout<<"\n|    STT    |    Ho Ten     |  Chi so tieu thu  | So tien phai tra |";
+      cout<<"\n____________________________________________________________________";
+      for(int i=0;i<k;i++){
+	      cout<<"\n|"<<setw(8)<<(i+1)<<setw(8)<<"|"<<setw(11)<<s[i].Ten<<setw(11)<<"|"<<setw(11)<<s[i].sotieuthu<<setw(11)<<"|"<<setw(11)<<s[i].sotien<<setw(11)<<"|";                             
+	  cout<<"\n____________________________________________________________________";
+	  }
+   
+}
+TD max(TD s[],int k){
+   TD temp=s[0];
+   for(int i=0;i<k;i++)
+      if(s[i].sotien>temp.sotien)
+	      temp=s[i];   		     
+	      return(temp);
+	      
+};	
+void inMax(TD s[],int k){
+   for(int i=0;i<k;i++){
+     if(s[i].sotien==max(s,k).sotien)
+	 {
+	 	cout<<"\n";
+	   xuat(s[i]);
+	 }
+   }
+
+}
+
+int main()
+{
+  TD s[100];
+  int n;
+  cout<<"\nNhap Vao So Nguoi ";
+  cin>>n;
+  cout<<"\n       Nhap Vao Thong Tin Cua Tung Ho ";
+  nhap(s,n);
+  cout<<"\n Nhung Khach Hang Tieu Thu Nhieu Dien Nhat  ";
+  inMax(s,n);
+  cout<<"\n    Bang Thông Tin Khach hang duoi dang thu tu giam dan cua tien phai tra :";
+  sapxep(s,n);
+  xuat(s,n);
+}
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Bài 3-k55: Cho một tập phiếu lương. Mỗi phiếu có ghi các thông tin sau: Họ và tên, giới tính, lương, phụ cấp, các khoản trừ của mỗi nhân viên trong một đơn vị. Viết chương trình thực hiện các chức năng sau:
+Câu 1: (2 điểm)
+Nhập thông tin cho từng nhân viên trong đơn vị.
+Câu 2: (2 điểm)
+Tính tiền được lĩnh của mỗi nhân viên biết rằng:
+Tiền được lĩnh = lương + phụ cấp –các khoản trừ
+Câu 3: (2 điểm) Tính tỷ lệ phần trăm các nhân viên nữ và có lương > 10 triệu trong đơn vị
+Câu 4: (2 điểm)
+Tìm và in ra thông tin của những nhân viên có tiền được lĩnh thấp nhất trong đơn vị
+Câu 5: (2 điểm)
+Sắp xếp và in thông tin của các nhân viên dưới dạng bảng sau theo thứ tự tăng dần của tiền được lĩnh
+STT Họ và tên Tiền được lĩnh
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<iomanip>
+#include<string.h>
+#include<fstream>
+using namespace std;
+struct PL
+{char ht[30];
+float gt,luong,phucap,ckt,tiendl;
+};
+void nhap(PL&s1)
+{	cout<<"\nNhap vao ho ten nhan vien:";fflush(stdin);gets(s1.ht);
+	cout<<"\nNhap vao gioi tinh 0 la nu 1 la nam:";cin>>s1.gt;
+	cout<<"\nNhap vao luong nhan vien:";cin>>s1.luong;
+	cout<<"\nNhap vao phu cap cua nhan vien:";cin>>s1.phucap;
+	cout<<"\nNhap vao cac khoan tru:";cin>>s1.ckt;
+	s1.tiendl=s1.luong+s1.phucap-s1.ckt;
+};
+void nhap(PL s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{cout<<"\nNhap vao thong tin phieu luong thu"<<(i+1)<<"la:";
+	nhap(s[i]);
+	};
+};
+float phantram(PL s[], int k)
+{
+	int s1=0; float pt=0;
+	for(int i=0;i<k;i++)
+	if(s[i].gt==0&&s[i].luong>10000000) s1+=1;
+	pt=s1/k*100;
+	return pt;
+};
+void xuat(PL&s1)
+{
+	cout<<"\nHo ten nhan vien:"<<s1.ht;
+	cout<<"\nGioi tinh 0 la nu 1 la nam:"<<s1.gt;
+	cout<<"\nLuong cua nhan vien nay la:"<<s1.luong;
+	cout<<"\nPhu cap la:"<<s1.phucap;
+	cout<<"\nTien duoc linh la:"<<s1.tiendl;
+};
+PL Min (PL s[],int k)
+{
+	PL temp=s[0];
+	for(int i=1;i<k;i++)
+	if(s[i].tiendl<temp.tiendl) temp=s[i];
+	return temp;
+};
+
+void inmin(PL s[],int k)
+{
+	for(int i=0;i<k;i++)
+	if(s[i].tiendl==Min(s,k).tiendl)
+	{cout<<"\n";
+	xuat(s[i]);
+	}
+};
+void swap(PL&s1,PL&s2)
+{
+	PL temp;
+	temp=s1;
+	s1=s2;
+	s2=temp;
+};
+void sapxep(PL s[], int k)
+{
+	for(int i=0;i<k-1;i++)
+	{for(int j=i+1;j<k;j++)
+		{if(s[i].tiendl>s[j].tiendl)
+		swap(s[i],s[j]);
+		};
+	};
+};
+void xuatbang (PL s[],int k)
+{
+	cout<<"\n|    STT    |     Ho va ten     |    Tien duoc linh    |";
+	cout<<"\n_______________________________________________________";
+	for(int i=0;i<k;i++){
+		cout<<"\n|"<<setw(8)<<(i+1)<<setw(8)<<"|"<<setw(12)<<s[i].ht<<setw(12)<<"|"<<setw(10)<<s[i].tiendl<<setw(10)<<"|";
+		cout<<"\n_______________________________________________________";
+	};
+};
+int main()
+{
+	PL S[100];
+	int n;
+	cout<<"\n Nhap vao so phieu luong:";
+	cin>>n;
+	cout<<"\n Nhap vao thong tin tung phieu luong";
+	nhap(S,n);
+	cout<<"\n Ty le phan tram so nhan vien nu co luong > 10 trieu trong don vi la"<<phantram(S,n);
+	cout<<"\n Nhung nhan vien co tien duoc linh thap nhat don vi la:";
+	inmin(S,n);
+	cout<<"\nBang nhan vien theo thu tu tang dan cua tien duoc linh la:";
+	sapxep(S,n);
+	xuatbang(S,n);
+	getch();
+};
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Bài 1-2017: Cho một danh sách thống kê các mặt hàng được bán trong từng tháng năm 2017 của cửa hàng X gồm các thông tin: Mã hàng, tên hàng, tháng bán và số tiền bán. Viết chương trình thực hiện các công việc sau :
+Câu 1(2đ):
+Tổ chức cấu trúc dữ liệu và nhập thông tin cho danh sách trên.
+Câu 2(2đ):
+Tính tổng tiền bán hàng của tất cả các mặt hàng .
+Câu 3(2đ):
+Tìm và in mặt hàng có tiền bán trong tháng 12 thấp nhất .
+Câu 4(2đ):
+Tìm chênh lệch giữa tổng tiền bán hàng tháng 11 với tổng tiền bán hàng tháng 12.
+Câu 5(2đ):
+In ra bảng tổng kết các mặt hàng bán tháng 12 theo trật tự tăng dần của số tiền bán theo mẫu:.
+Mã hàng Tên hàng Số tiền bán
+Tổng Xxxx
+…..
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<string.h>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+struct TH
+{
+	char sothe[10],ten[30];
+	float kihan,sotien,thang;
+};
+void nhap(TH &th)
+{
+	cout<<"Nhap vao so the:";fflush(stdin);gets(th.sothe);
+	cout<<"\nNhap vao ten nguoi gui:";gets(th.ten);
+	cout<<"\nNhap vao so tien gui: ";cin>>th.sotien;
+	cout<<"\nNhap vao thang gui:";cin>>th.thang;
+	cout<<"\nNhap vao ki han gui 3 thang la 3 , 6 thang la 6, 12 thang la 12, khong ki han la 0:";cin>>th.kihan;
+}
+void nhap(TH s[],int k)
+{
+	for(int i=0;i<k;i++){
+	cout<<"\nThe tiet kiem thu: "<<(i+1)<<"la: ";
+	nhap(s[i]);}
+}
+float tongtien(TH s[],int k)
+{
+	float tn=0;
+	for(int i=0;i<k;i++)
+	tn+=s[i].sotien;
+	return tn;
+};
+void xuat(TH th)
+{
+	cout<<"So the la: "<<th.sothe;
+	cout<<"\nTen nguoi gui la: "<<th.ten;
+	cout<<"\nSo tien gui la: "<<th.sotien;
+	cout<<"\nThang gui la: "<<th.thang;
+	cout<<"\nKi han gui 3 thang la 3, 6 thang la 6, 12 thang la 12, khong ki han la 0:"<<th.kihan;
+};
+TH max(TH s[],int k)
+{
+	TH temp=s[0];
+	for(int i=0;i<k;i++)
+	{
+		if(s[i].sotien>temp.sotien)
+		temp=s[i];
+	}
+	return temp;
+}
+float chenhlech(TH s[],int k)
+{
+	float tt12=0,tt6=0,chl=0;
+	for(int i=0;i<k;i++)
+	{
+		if(s[i].kihan==12) tt12+=s[i].sotien;
+		if(s[i].kihan==6) tt6+=s[i].sotien;
+	}
+	if(tt6>tt12) chl=tt6/tt12; chl=tt12/tt6;
+	return chl;
+}
+void swap(TH&th1,TH&th2)
+{
+	TH temp;
+	temp=th1;
+	th1=th2;
+	th2=temp;
+}
+void sapxep(TH s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{for(int j=0;j<k;j++)
+	{
+		if(s[i].sotien>s[j].sotien)
+		swap(s[i],s[j]);
+	}
+	}
+}
+void xuatbang(TH s[],int k)
+{
+	cout<<"\n|    So the    |     Ten nguoi gui     |    So tien gui    |";
+	cout<<"\n___________________________________________________________";
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\n|"<<setw(7)<<s[i].sothe<<setw(8)<<"|"<<setw(12)<<s[i].ten<<setw(12)<<"|"<<setw(9)<<s[i].sotien<<setw(9)<<"|";
+		cout<<"\n___________________________________________________________";
+	}
+	cout<<"\n|              |"<<setw(10)<<"Tong"<<setw(10)<<"|"<<setw(10)<<tongtien(s,k)<<setw(10)<<"|";
+}
+int main()
+{
+	TH s[100];
+	int n;
+	cout<<"\nNhap vao so the: ";cin>>n;
+	cout<<"\nNhap vao thong tin tung the: ";
+	nhap(s,n);
+	cout<<"\nTong tien gui cua tat ca cac the la: "<<tongtien(s,n);
+	cout<<"\nThe co tien gui cao nhat la: ";
+	xuat(max(s,n));
+	cout<<"\nChenh lech giua tong tien gui ki han 12 thang va tong tien gui ki han 6 thang la: "<<chenhlech(s,n);
+	TH KH12[50];
+	int sizeKH12;
+	for(int i=0;i<n;i++)
+	{
+		if(s[i].kihan==12)
+		{
+		KH12[sizeKH12]=s[i];
+		sizeKH12++;
+		};
+	};
+	cout<<"\nBang thong ke cac the TK ki han 12 thang theo trat tu tang dan cua so tien gui la:";
+	sapxep(KH12,sizeKH12);
+	xuatbang(KH12,sizeKH12);
+}
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Bài 2-2017: Cho tập thẻ gửi tiết kiệm năm 2017 mỗi thẻ có các thông tin: số thẻ, tên người gửi, tháng gửi, kỳ hạn (3 tháng, 6 tháng, 12 tháng và không kỳ hạn) và số tiền gửi. Viết chương trình thực hiện các công việc sau :
+Câu 1(2đ):
+Tổ chức cấu trúc dữ liệu và nhập thông tin cho tập thẻ trên.
+Câu 2(2đ):
+Tính tổng tiền gửi tiết kiệm của tất cả các thẻ .
+Câu 3(2đ):
+Tìm và in thẻ tiết kiệm có số tiền gửi cao nhất .
+Câu 4(2đ):
+Tìm chênh lệch giữa tổng tiền gửi kỳ hạn 12 tháng với tổng tiền gửi kỳ hạn 6 tháng.
+Câu 5(2đ):
+In ra bảng thống kê các thẻ tiết kiệm kỳ hạn 12tháng theo trật tự tăng dần của số thẻ gửi theo mẫu: Số thẻ Tên người gửi Số tiền gửi
+Tổng Xxxx
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<string.h>
+#include<fstream>
+#include<iomanip>
+using namespace std;
+struct TH
+{
+	char sothe[10],ten[30];
+	float kihan,sotien,thang;
+};
+void nhap(TH &th)
+{
+	cout<<"Nhap vao so the:";fflush(stdin);gets(th.sothe);
+	cout<<"\nNhap vao ten nguoi gui:";gets(th.ten);
+	cout<<"\nNhap vao so tien gui: ";cin>>th.sotien;
+	cout<<"\nNhap vao thang gui:";cin>>th.thang;
+	cout<<"\nNhap vao ki han gui 3 thang la 3 , 6 thang la 6, 12 thang la 12, khong ki han la 0:";cin>>th.kihan;
+}
+void nhap(TH s[],int k)
+{
+	for(int i=0;i<k;i++){
+	cout<<"\nThe tiet kiem thu: "<<(i+1)<<"la: ";
+	nhap(s[i]);}
+}
+float tongtien(TH s[],int k)
+{
+	float tn=0;
+	for(int i=0;i<k;i++)
+	tn+=s[i].sotien;
+	return tn;
+};
+void xuat(TH th)
+{
+	cout<<"So the la: "<<th.sothe;
+	cout<<"\nTen nguoi gui la: "<<th.ten;
+	cout<<"\nSo tien gui la: "<<th.sotien;
+	cout<<"\nThang gui la: "<<th.thang;
+	cout<<"\nKi han gui 3 thang la 3, 6 thang la 6, 12 thang la 12, khong ki han la 0:"<<th.kihan;
+};
+TH max(TH s[],int k)
+{
+	TH temp=s[0];
+	for(int i=0;i<k;i++)
+	{
+		if(s[i].sotien>temp.sotien)
+		temp=s[i];
+	}
+	return temp;
+}
+float chenhlech(TH s[],int k)
+{
+	float tt12=0,tt6=0,chl=0;
+	for(int i=0;i<k;i++)
+	{
+		if(s[i].kihan==12) tt12+=s[i].sotien;
+		if(s[i].kihan==6) tt6+=s[i].sotien;
+	}
+	if(tt6>tt12) chl=tt6/tt12; chl=tt12/tt6;
+	return chl;
+}
+void swap(TH&th1,TH&th2)
+{
+	TH temp;
+	temp=th1;
+	th1=th2;
+	th2=temp;
+}
+void sapxep(TH s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{for(int j=0;j<k;j++)
+	{
+		if(s[i].sotien>s[j].sotien)
+		swap(s[i],s[j]);
+	}
+	}
+}
+void xuatbang(TH s[],int k)
+{
+	cout<<"\n|    So the    |     Ten nguoi gui     |    So tien gui    |";
+	cout<<"\n___________________________________________________________";
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\n|"<<setw(7)<<s[i].sothe<<setw(8)<<"|"<<setw(12)<<s[i].ten<<setw(12)<<"|"<<setw(9)<<s[i].sotien<<setw(9)<<"|";
+		cout<<"\n___________________________________________________________";
+	}
+	cout<<"\n|              |"<<setw(10)<<"Tong"<<setw(10)<<"|"<<setw(10)<<tongtien(s,k)<<setw(10)<<"|";
+}
+int main()
+{
+	TH s[100];
+	int n;
+	cout<<"\nNhap vao so the: ";cin>>n;
+	cout<<"\nNhap vao thong tin tung the: ";
+	nhap(s,n);
+	cout<<"\nTong tien gui cua tat ca cac the la: "<<tongtien(s,n);
+	cout<<"\nThe co tien gui cao nhat la: ";
+	xuat(max(s,n));
+	cout<<"\nChenh lech giua tong tien gui ki han 12 thang va tong tien gui ki han 6 thang la: "<<chenhlech(s,n);
+	TH KH12[50];
+	int sizeKH12;
+	for(int i=0;i<n;i++)
+	{
+		if(s[i].kihan==12)
+		{
+		KH12[sizeKH12]=s[i];
+		sizeKH12++;
+		};
+	};
+	cout<<"\nBang thong ke cac the TK ki han 12 thang theo trat tu tang dan cua so tien gui la:";
+	sapxep(KH12,sizeKH12);
+	xuatbang(KH12,sizeKH12);
+}
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+Bài 6-2015: Một công ty A có N đại lý. Cho biết tên các đại lý, địa chỉ các đại lý, daonh thu năm của từng đại lý. Viết chương trình:
+Câu 1(2đ):
+Nhập thông tin co từng đại lý của công ty A,
+Câu 2(2đ):
+Tính tổng số tiền mà công ty A thu được từ doanh thu của N đại lý trên trong năm 2015.
+Câu 3(2đ):
+Tình doanh thu trung bình năm 2015 của N đại lý trên.
+Câu 4(2đ):
+Tìm và in thông tin của đại lý có doanh thu cao nhất.
+Câu 5(2đ):
+Sắp xếp và in thông tin dưới dạng bảng của từng đại lý theo thứ tự giảm dần doanh thu năm 2015:.
+STT Tên đại lý Địa chỉ đại lý Doanh thu năm 2015
+
+#include<conio.h>
+#include<stdio.h>
+#include<iostream>
+#include<iomanip>
+using namespace std;
+struct DL
+{
+	char ten[20],dc[30];
+	float dt;
+};
+void nhap(DL &dl)
+{
+	cout<<"Nhap vao ten dai ly: ";fflush(stdin);gets(dl.ten);
+	cout<<"\nNhap vao dia chi dai ly: ";gets(dl.dc);
+	cout<<"\nNhap vao doanh thu nam 2015 cua dai ly la: ";cin>>dl.dt;
+};
+void nhap(DL s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\nThong tin dai ly thu "<<(i+1)<<"la: ";
+		nhap(s[i]);
+	}
+}
+float tongtien(DL s[],int k)
+{
+	float tt=0;
+	for(int i=0;i<k;i++)
+	tt+=s[i].dt;
+	return tt;
+};
+float trungbinh(DL s[],int k)
+{
+	float tt=0;
+	for(int i=0;i<k;i++)
+	tt+=s[i].dt;
+	float dttb=tt/k;
+	return dttb;
+}
+void xuat(DL dl)
+{
+	cout<<"Ten dai ly la: "<<dl.ten;
+	cout<<"\nDia chi la: "<<dl.dc;
+	cout<<"\nDoanh thu nam 2015 la: "<<dl.dt;
+}
+DL max(DL s[],int k)
+{
+	DL temp=s[0];
+	for(int i=0;i<k;i++)
+	{
+		if(s[i].dt<temp.dt)
+		s[i]=temp;
+	}
+	return temp;
+}
+void swap(DL&dl1,DL&dl2)
+{
+	DL temp;
+	temp=dl1;
+	dl1=dl2;
+	dl2=temp;
+}
+void sapxep(DL s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{
+		for(int j=i+1;j<k;j++)
+		{
+			if(s[i].dt<s[j].dt)
+			swap(s[i],s[j]);
+		}
+	}
+}
+void xuatbang(DL s[],int k)
+{
+	cout<<"\n_________________________________________________________________________________";
+	cout<<"\n|    STT    |    Ten dai ly    |    Dia chi dai ly    |    Doanh thu nam 2015    |";
+	cout<<"\n_________________________________________________________________________________";
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\n|"<<setw(6)<<(i+1)<<setw(6)<<"|"<<setw(10)<<s[i].ten<<setw(10)<<"|"<<setw(11)<<s[i].dc<<setw(11)<<"|"<<setw(11)<<s[i].dt<<setw(11)<<"|";
+		cout<<"\n_________________________________________________________________________________";
+	}
+}
+int main()
+{
+	DL s[100];
+	int n;
+	cout<<"Nhap vao so dai ly: ";cin>>n;
+	cout<<"Nhap vao thong tin cac dai ly:";
+	nhap(s,n);
+	cout<<"\nTong so tien ma cong ty A thu duoc tu doanh thu cua "<<n<<" dai ly tren la: "<<tongtien(s,n);
+	cout<<"\nDoanh thu trung binh cua "<<n<<" dai ly tren la: "<<trungbinh(s,n);
+	cout<<"\nDai ly co doanh thu cao nhat la: ";
+	xuat(max(s,n));
+	cout<<"\n     BANG THONG TIN CAC DAI LY";
+	sapxep(s,n);
+	xuatbang(s,n);
+}
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Bài Tiêu thụ điện-2015: Cho một tập hóa đơn tiền điện của N khách hàng. Một hóa đơn vao gồm các thông tin sau: Mã KH, tên KH, địa chỉ KH, chỉ số đo đồng hồ tháng trước, chỉ số đo đồng hồ tháng sau, chỉ số tiêu thụ số tiền. Viết chương trình:
+Câu 1(2đ):
+Nhập thông tin cho từng khách hàng.
+Câu 2(2đ):
+Tính chỉ số tiêu thụ điện và số tiền phải trả của từng khách hàng trong tháng, biết rằng: chỉ số tiêu thụ trong tháng = chỉ số đo tháng trước – chỉ số đo tháng sau
+Số tiền phải trả trong tháng của từng khách hàng = chỉ số tiêu thụ x 5000 đ
+Câu 3(2đ):
+Tình tổng số tiền mà nhà sản xuất thu được từ N khách hàng trên.
+Câu 5(2đ):
+Sắp xếp và in thông tin dưới dạng bảng của từng khách hàng theo thứ tự giảm dần của chỉ số tiêu thụ:.
+STT Họ tên KH Chỉ số tiêu thụ Số tiền phải trả
+…..
+
+#include<stdio.h>
+#include<conio.h>
+#include<iostream>
+#include<iomanip>
+using namespace std;
+struct HD
+{
+	char makh[10],ten[30],dc[30];
+	float cstt,csts,tieuthu,thanhtien;
+};
+void nhap(HD &hd)
+{
+	cout<<"Nhap vao ma khach hang: ";fflush(stdin);gets(hd.makh);
+	cout<<"\nNhap vao ten khach hang: ";gets(hd.ten);
+	cout<<"\nNhap vao dia chi khach hang: ";gets(hd.dc);
+	cout<<"\nNhap vao chi so tieu thu thang truoc: ";cin>>hd.cstt;
+	cout<<"\nNhap vao chi so tieu thu thang sau: ";cin>>hd.csts;
+	hd.tieuthu=hd.cstt-hd.csts;
+	hd.thanhtien=hd.tieuthu*5000;
+}
+void nhap(HD s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\nHoa don thu "<<(i+1)<<"la: ";
+		nhap(s[i]);
+	}
+}
+float tongtien(HD s[],int k)
+{
+	float tt=0;
+	for(int i=0;i<k;i++)
+	{
+		tt+=s[i].thanhtien;
+	}
+	return tt;
+}
+void swap(HD&hd1,HD&hd2)
+{
+	HD temp;
+	temp=hd1;
+	hd1=hd2;
+	hd2=temp;
+}
+void sapxep(HD s[],int k)
+{
+	for(int i=0;i<k;i++)
+	{
+		for(int j=i+1;j<k;j++)
+		{
+			if(s[i].tieuthu<s[j].tieuthu)
+			swap(s[i],s[j]);
+		}
+	}
+}
+void xuatbang(HD s[],int k)
+{
+	cout<<"\n_______________________________________________________________________________________";
+	cout<<"\n|    STT    |    Ho ten khach hang    |    Chi so tieu thu    |    So tien phai tra    |";
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\n|"<<setw(8)<<(i+1)<<setw(8)<<"|"<<setw(8)<<s[i].ten<<setw(8)<<"|"<<setw(8)<<s[i].tieuthu<<setw(8)<<"|"<<setw(8)<<s[i].thanhtien<<setw(8)<<"|";
+		cout<<"\n________________________________________________________________________________________";
+	}
+}
+int main()
+{
+	HD s[100];
+	int n;
+	cout<<"\nNhap vao so luong hoa don: ";
+	cin>>n;
+	cout<<"\nNhap thong tin tung hoa don: ";
+	nhap(s,n);
+	cout<<"\nTong tien ma nha san xuat thu duoc tu "<<n<<"khach hang la: "<<tongtien(s,n);
+	cout<<"\n    BANG THONG TIN   ";
+	xuatbang(s,n);
+}
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Bài Sổ tiết kiệm:
+Nhập số người gửi, họ tên, số tiền, lãi suất.... rồi in ra bảng thông tin
+
+#include<conio.h>
+#include<stdio.h>
+#include<iostream>
+#include<string.h>
+#include<math.h>
+#include<iomanip>
+using namespace std;
+struct SO
+{
+	char soso[10], hoten[25];
+	int namgui; float laisuat,sotiengui,tn;
+
+};
+void nhap(SO &s1)
+{
+	cout<<"\n so so la:";fflush(stdin);gets(s1.soso);
+	cout<<"\n ten nguoi gui:";gets(s1.hoten);
+	cout<<"\n nam gui:";cin>>s1.namgui;
+	cout<<"\n laisuat:";cin>>s1.laisuat;
+	cout<<"\n so tien gui:";cin>>s1.sotiengui;
+	s1.tn=s1.sotiengui*pow(1+s1.laisuat,2018-s1.namgui);
+}
+
+void nhap(SO s[], int k)
+{
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\n nhap so thu:"<<(i+1)<<"la:";
+		nhap (s[i]);
+	}
+};
+
+SO max(SO s[], int k)
+{
+	SO temp= s[0];
+	for(int i=0;i<k;i++) if(s[i].sotiengui>temp.sotiengui) temp=s[i];
+	return temp;
+}
+
+void in(SO s2)
+{
+	cout<<"\n so so la:"<<(s2.soso);
+	cout<<"\n ten nguoi gui:"<<(s2.hoten);
+	cout<<"\n nam gui:"<<s2.namgui;
+	cout<<"\n laisuat:"<<s2.laisuat;
+	cout<<"\n so tien gui:"<<s2.sotiengui;
+	cout<<"\nTien Nhan:"<<s2.tn;
+}
+
+//void in(SO s[], int k)
+//{
+//	for(int i=0;i<k;i++)
+//	{
+//		cout<<"\n nhap so thu:"<<(i+1)<<"la:";
+//		nhap (s[i]);
+//	}
+//};
+
+void xuat (SO a[],int k){
+	for(int i=0;i<k;i++){
+		cout<<"\nso thu "<<(i+1)<<"la:";
+		in(a[i]);
+	}
+}
+
+void in(SO a[],int k)
+{
+	
+	cout<<"\n | So the| Ten nguoi| So tien| thanh tien |";
+	cout<<"\n _____________________________";
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\n|"<<setw(5)<<i+1<<"|"<<setw(10)<<a[i].hoten<<"|"<<setw(5)<<a[i].sotiengui<<"|"<<setw(5)<<a[i].tn<<"|";
+		cout<<"\n ___________________________";
+	}
+}
+
+int main()
+{
+	SO st[100];int n;
+	cout<<"\n nhap so luon so:";cin>>n;
+	cout<<"\n nhap thong tin cac so:";nhap(st,n);
+	cout<<"\n So so co so tien gui max la:";in(max(st,n));
+	cout<<"\n danh sach so la:";
+	in(st,n);
+	cout<<"\nThong tin tuong nguoi la :";
+	xuat(st,n);
+	
+	getch();
+}
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Bài Tính điện:
+//cho tep hoa don thu tien dien ,
+//so phieu ,ten ho , chi so dau ky , cuoi ky
+//giá :2020
+//viet ct quan ly thuc hien cv
+//a: nhap tap phieu
+//b:tinh dien tieu thu + thanh tien
+//c:tim ho co so dien tieu thu nho nhat
+//d:in ra bang
+
+//cho tep hoa don thu tien dien ,
+//so phieu ,ten ho , chi so dau ky , cuoi ky
+//giá :2020
+//viet ct quan ly thuc hien cv 
+//a: nhap tap phieu
+//b:tinh dien tieu thu + thanh tien
+//c:tim ho co so dien tieu thu nho nhat
+//d:in ra bang
+#include<stdio.h>
+#include<conio.h>
+#include<math.h>
+#include<iomanip>
+#include<iostream>
+using namespace std;
+struct Hd{
+	char SoP[30],teHo[50];
+	float soDauKy,soCuoiKy,soDien,thanhtien;
+};
+void nhap(Hd&s1){
+  cout<<"\nNhap vao so phieu ho:";fflush(stdin);gets(s1.SoP);
+  cout<<"\nNhap vao ho ten ho:";gets(s1.teHo);
+  cout<<"\nNhap vao chi so dau ki:";cin>>(s1.soDauKy);
+  cout<<"\nhap vao chi so cuoi ky:";cin>>(s1.soCuoiKy);
+  s1.soDien=s1.soCuoiKy-s1.soDauKy;
+  s1.thanhtien=s1.soDien*2020;
+};
+void nhap(Hd s[],int k){
+	for(int i=0;i<k;i++)
+	{
+		cout<<"\nNhap vao hoa don thu "<<(i+1)<<"la ";
+		nhap(s[i]);
+	
+	}
+}
+Hd max(Hd s[], int k)
+	{
+		Hd temp= s[0];
+		for(int i=0;i<k;i++) if(s[i].soDien>temp.soDien) temp=s[i];
+		return temp;
+	}
+void xuat(Hd s1)
+	{
+		cout<<"\nPhieu ho la:"<<s1.SoP;
+		cout<<"\nHo Ten Ho la:"<<s1.teHo;
+		cout<<"\nChi so dau ky la :"<<s1.soDauKy;
+		cout<<"\nChi so cuoi ky la:"<<s1.soCuoiKy;
+		cout<<"\nSo dien ho tieu thu la:"<<s1.soDien;
+		cout<<"\nThanh Tien:"<<s1.thanhtien;
+	
+	}
+void in(Hd s[],int k){
+    for(int i=0;i<k;i++){
+		cout<<"\nso thu "<<(i+1)<<"la:";
+		xuat(s[i]);
+	}
+
+}
+void xuat(Hd s[],int k)
+	{
+		
+	    cout<<"\n|    So phieu    |     Ten Ho     |    Thanh Tien   |";
+	    cout<<"\n______________________________________________________";
+	    for(int i=0;i<k;i++)
+	    	{
+			  cout<<"\n|"<<setw(9)<<(i+1)<<setw(9)<<"|"<<setw(9)<<s[i].teHo<<setw(9)<<"|"<<setw(9)<<s[i].thanhtien<<setw(9)<<"|";
+			  cout<<"\n______________________________________________________";
+			}
+	
+	}
+
+
+int main(){
+   Hd s1[100];
+   int k;
+   cout<<"\n Nhap vao so ho:";
+   cin>>k;
+   cout<<"\n Nhap vao tong tin cua ca ho ";
+   nhap(s1,k);
+   cout<<"\n Thôn tin cua các hô la ";
+   in(s1,k);
+   cout<<"\n Ho co so tien max la ";
+   xuat(max(s1,k));
+   cout<<"\n            BANG THANH TIEN       ";
+   xuat(s1,k);
+   
+   getch;
+   
+   
+
+}
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+

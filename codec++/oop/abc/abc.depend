@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1608551366 source:d:\code\codec++\abc\main.cpp
+	<iostream>
+	<string>
+	<cstdio>
+
+1608551334 source:d:\code\codec++\abc\untitled3.cpp
+	<iostream>
+	<string>
+	<cstdio>
+
