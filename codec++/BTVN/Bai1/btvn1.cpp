@@ -16,6 +16,8 @@ mã sinh viên, họ tên, lớp, điểm trung bình.
 
 using namespace std;
 
+
+
 struct SV {
     int MSV;
     char Hoten[32];
